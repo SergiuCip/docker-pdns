@@ -1,29 +1,10 @@
 #!/bin/bash
-MYSQL_HOST=db
-MYSQL_USER=root
-MYSQL_PASSWORD=${DB_ENV_MYSQL_ROOT_PASSWORD}
-MYSQL_DB=pdns
 PDNS_ALLOW_AXFR_IPS=${PDNS_ALLOW_AXFR_IPS:-127.0.0.1}
 PDNS_MASTER=${PDNS_MASTER:-yes}
 PDNS_SLAVE=${PDNS_SLAVE:-no}
 POWERADMIN_HOSTMASTER=${POWERADMIN_HOSTMASTER:-}
 POWERADMIN_NS1=${POWERADMIN_NS1:-}
 POWERADMIN_NS2=${POWERADMIN_NS2:-}
-
-until nc -z db 3306; do
-    echo "$(date) - waiting for mysql..."
-    sleep 1
-done
-
-if mysql -u root -p${MYSQL_PASSWORD} --host=db "${MYSQL_DB}" >/dev/null 2>&1 </dev/null
-then
-	echo "Database ${MYSQL_DB} already exists"
-else
-	mysql -u root -p${MYSQL_PASSWORD} --host=db -e "CREATE DATABASE ${MYSQL_DB}"
-	mysql -u root -p${MYSQL_PASSWORD} --host=db pdns < /pdns.sql
-	mysql -u root -p${MYSQL_PASSWORD} --host=db pdns < /poweradmin.sql
-	rm /pdns.sql /poweradmin.sql
-fi
 
 ### PDNS
 sed -i "s/{{MYSQL_HOST}}/${MYSQL_HOST}/" /etc/powerdns/pdns.d/pdns.local.gmysql.conf
