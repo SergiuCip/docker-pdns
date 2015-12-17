@@ -14,6 +14,7 @@ RUN apt-get install -y \
 	php5-mcrypt \
 	php5-mysqlnd \
 	&& apt-get clean
+	
 ### PDNS ###
 RUN cd /tmp && wget https://downloads.powerdns.com/releases/deb/pdns-static_${VERSION}_amd64.deb && dpkg -i pdns-static_${VERSION}_amd64.deb
 RUN useradd --system pdns
