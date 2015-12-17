@@ -1,7 +1,5 @@
 pdns:
   image: secns/pdns
-  links:
-  - "mysql:db"
   ports:
   - "53:53"
   - "53:53/udp"
