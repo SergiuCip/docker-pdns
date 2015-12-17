@@ -1,5 +1,5 @@
 FROM ubuntu:trusty
-MAINTAINER Patrick Oberdorf <patrick@oberdorf.net>
+MAINTAINER Sergiu Cornea <sergiu_ciprian@hotmail.co.uk>
 
 ENV VERSION 3.4.7-1
 
